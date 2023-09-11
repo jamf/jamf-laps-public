@@ -1,3 +1,11 @@
+## Mac finder settings
+.DS_Store
+
+*.xcbkptlist
+*.xckptlist
+
+
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
