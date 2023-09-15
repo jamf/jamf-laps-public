@@ -11,7 +11,6 @@ struct ContentView: View {
     @AppStorage("jamfURL") var jamfURL: String = ""
     @AppStorage("userName") var userName: String = ""
     @AppStorage("useAPIRoles") var useAPIRoles: Bool = false
-//    @AppStorage("savePassword") var savePassword: Bool = false
     
     @State private var password = ""
     
@@ -177,9 +176,7 @@ struct ContentView: View {
             }
         }
         .onAppear {
-//            if savePassword  {
                 fetchPassword()
-//            }
         }
         
         HStack(alignment: .center) {
@@ -200,7 +197,6 @@ struct ContentView: View {
     func fetchPassword() {
         let credentialsArray = Keychain().retrieve(service: "com.jamf.jamf-laps")
         if credentialsArray.count == 2 {
-            //userName = credentialsArray[0]
             password = credentialsArray[1]
         }
         
