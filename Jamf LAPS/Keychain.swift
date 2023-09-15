@@ -2,7 +2,6 @@
 //  Keychain.swift
 //  Jamf LAPS
 //
-//  Created by Richard Mallion on 05/05/2023.
 //  Copyright 2023, Jamf
 
 import Foundation

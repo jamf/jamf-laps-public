@@ -1,9 +1,8 @@
 //
 //  ContentView.swift
 //  Jamf LAPS
+//  Copyright 2023, Jamf
 //
-//  Created by Richard Mallion on 04/05/2023.
-//  Copyright 2023, Jamf 
 
 import SwiftUI
 import os.log

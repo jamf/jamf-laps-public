@@ -2,7 +2,6 @@
 //  SettingsView.swift
 //  Jamf LAPS
 //
-//  Created by Richard Mallion on 15/07/2023.
 //  Copyright 2023, Jamf
 
 import SwiftUI

@@ -2,7 +2,6 @@
 //  JamfProApi.swift
 //  Jamf LAPS
 //
-//  Created by Richard Mallion on 06/05/2023.
 //  Copyright 2023, Jamf
 
 import Foundation

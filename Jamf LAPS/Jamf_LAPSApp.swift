@@ -2,7 +2,6 @@
 //  Jamf_LAPSApp.swift
 //  Jamf LAPS
 //
-//  Created by Richard Mallion on 04/05/2023.
 //  Copyright 2023, Jamf
 
 import SwiftUI
