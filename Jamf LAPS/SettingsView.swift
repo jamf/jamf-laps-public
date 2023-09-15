@@ -14,7 +14,6 @@ struct SettingsView: View {
     @State var userNameLabel: String = "Username:"
     @State var passwordLabel: String = "Password:"
 
-//    @AppStorage("savePassword") var savePassword: Bool = false
     @State private var password = ""
     
     var body: some View {
