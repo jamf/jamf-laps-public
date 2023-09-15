@@ -61,16 +61,6 @@ struct SettingsView: View {
 
                 Spacer()
             }
-
-//            Toggle(isOn: $savePassword) {
-//                Text("Save Password")
-//            }
-//            .toggleStyle(CheckboxToggleStyle())
-//            .offset(x: -260 , y: -10)
-//            .onChange(of: savePassword) { newValue in
-//                savePasswordToKeychain()
-//            }
-            
         }
         .onAppear {
             let defaults = UserDefaults.standard
@@ -84,15 +74,11 @@ struct SettingsView: View {
                 userNameLabel = "Username:"
                 passwordLabel = "Password:"
             }
-
-//            savePassword = defaults.bool(forKey: "savePassword" )
-//            if savePassword  {
                 let credentialsArray = Keychain().retrieve(service: "com.jamf.jamf-laps")
                 if credentialsArray.count == 2 {
                     userName = credentialsArray[0]
                     password = credentialsArray[1]
                 }
-//            }
         }
     }
     
