@@ -11,7 +11,7 @@ This app will allow you to:
 
 ### Requirements
 
-- A Mac running macOS Venture (13.0)
+- A Mac running macOS Ventura (13.0)
 - Jamf Pro 10.45 or higher
 - Jamf Pro Account that has the following minimum permissions:
   - Send Local Admin Password Command
