@@ -7,7 +7,7 @@ This app will allow you to:
 - Enable / Disable the service
 - Set the number of seconds for the password rotation time
 - Set the number of seconds for the password auto expiration time
-- Retrive the password for a given Mac and LAPS username
+- Retrieve the password for a given Mac and LAPS username
 
 ### Requirements
 
@@ -20,11 +20,13 @@ This app will allow you to:
   - View Local Admin Password Audit History
 
 ### History
+- 1.0.1
+  - Fixes an issue authenticating against multi-context Jamf Pro environments
 - 1.0
   - Moved the Jamf Pro url and authentication details to settings
   - Added support for Jamf Pro API Roles and Clients introduced in Jamf Pro 10.49
 - 0.9.1
-  - Added logging. Use `sudo log stream --info --predicate 'subsystem=="uk.co.mallion.jamf-laps"'` to view the logs
+  - Added logging. Use `sudo log stream --info --predicate 'subsystem=="com.jamf.jamf-laps"'` to view the logs
   - Fixed an issue where the LAPS user name was not being passed correctly.
 - 0.9: Initial release
 

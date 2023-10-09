@@ -2,6 +2,7 @@
 //  JamfProApi.swift
 //  Jamf LAPS
 //
+//  Created by Richard Mallion on 06/05/2023.
 //  Copyright 2023, Jamf
 
 import Foundation
@@ -21,29 +22,20 @@ struct JamfProAPI {
     
     func getToken(jssURL: String, base64Credentials: String , useAPIRole: Bool) async -> (String?,Int?) {
         Logger.laps.info("About to fetch Authentication Token")
-        guard var jamfAuthEndpoint = URLComponents(string: jssURL) else {
+        guard var jamfAuthEndpoint = URL(string: jssURL ) else {
             return (nil, nil)
         }
-        
         if useAPIRole {
-            jamfAuthEndpoint.path="/api/oauth/token"
+            jamfAuthEndpoint.append(path: "/api/oauth/token")
         } else {
-            jamfAuthEndpoint.path="/api/v1/auth/token"
+            jamfAuthEndpoint.append(path: "/api/v1/auth/token")
         }
-        
-
-        guard let url = jamfAuthEndpoint.url else {
-            return (nil, nil)
-        }
-        
         let parameters = [
             "client_id": username,
             "grant_type": "client_credentials",
             "client_secret": password
         ]
-
-
-        var authRequest = URLRequest(url: url)
+        var authRequest = URLRequest(url: jamfAuthEndpoint)
         authRequest.httpMethod = "POST"
         if useAPIRole {
             authRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
@@ -54,10 +46,6 @@ struct JamfProAPI {
         } else {
             authRequest.setValue("Basic \(base64Credentials)", forHTTPHeaderField: "Authorization")
         }
-        
-        
-        
-        
         Logger.laps.info("Fetching Authentication Token")
         guard let (data, response) = try? await URLSession.shared.data(for: authRequest)
         else {
@@ -92,17 +80,13 @@ struct JamfProAPI {
     
     func fetchSettings(jssURL: String, authToken: String) async -> (LAPSSettings?,Int?) {
         Logger.laps.info("About to fetch LAPS Settings")
-        guard var jamfcomputerEndpoint = URLComponents(string: jssURL) else {
+        guard var jamfAuthEndpoint = URL(string: jssURL ) else {
             return (nil, nil)
         }
-        
-        jamfcomputerEndpoint.path="/api/v2/local-admin-password/settings"
+        jamfAuthEndpoint.append(path: "/api/v2/local-admin-password/settings")
 
-        guard let url = jamfcomputerEndpoint.url else {
-            return (nil , nil)
-        }
         
-        var settingsRequest = URLRequest(url: url)
+        var settingsRequest = URLRequest(url: jamfAuthEndpoint)
         settingsRequest.httpMethod = "GET"
         settingsRequest.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
         settingsRequest.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -127,18 +111,13 @@ struct JamfProAPI {
 
     func saveSettings(jssURL: String, authToken: String, lapsSettings: LAPSSettings) async -> Int? {
         Logger.laps.info("About to save LAPS settings")
-        guard var jamfcomputerEndpoint = URLComponents(string: jssURL) else {
+        
+        guard var jamfAuthEndpoint = URL(string: jssURL ) else {
             return nil
         }
+        jamfAuthEndpoint.append(path: "/api/v2/local-admin-password/settings")
         
-        jamfcomputerEndpoint.path="/api/v2/local-admin-password/settings"
-
-        guard let url = jamfcomputerEndpoint.url else {
-            return nil
-        }
-
-        
-        var settingsRequest = URLRequest(url: url)
+        var settingsRequest = URLRequest(url: jamfAuthEndpoint)
         settingsRequest.httpMethod = "PUT"
         settingsRequest.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
         settingsRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -169,19 +148,13 @@ struct JamfProAPI {
     
     func getComputerID(jssURL: String, authToken: String, serialNumber: String) async -> (Int?,Int?) {
         Logger.laps.info("About to fetch the computer id for \(serialNumber)")
-
-        guard var jamfcomputerEndpoint = URLComponents(string: jssURL) else {
+        
+        guard var jamfAuthEndpoint = URL(string: jssURL ) else {
             return (nil, nil)
         }
+        jamfAuthEndpoint.append(path: "/JSSResource/computers/serialnumber/\(serialNumber)")
         
-        jamfcomputerEndpoint.path="/JSSResource/computers/serialnumber/\(serialNumber)"
-
-        guard let url = jamfcomputerEndpoint.url else {
-            return (nil, nil)
-        }
-
-        
-        var computerRequest = URLRequest(url: url)
+        var computerRequest = URLRequest(url: jamfAuthEndpoint)
         computerRequest.httpMethod = "GET"
         computerRequest.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
         computerRequest.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -210,15 +183,14 @@ struct JamfProAPI {
     
     func getComputerManagementID(jssURL: String, authToken: String, id: Int) async -> (String?,Int?) {
         Logger.laps.info("About to fetch ManagementID for computer id \(id)")
-        guard var jamfcomputerEndpoint = URLComponents(string: jssURL) else {
+        
+        guard var jamfAuthEndpoint = URL(string: jssURL ) else {
             return (nil, nil)
         }
-        jamfcomputerEndpoint.path="/api/v1/computers-inventory/\(id)"
-        guard let url = jamfcomputerEndpoint.url else {
-            return (nil, nil)
-        }
+        
+        jamfAuthEndpoint.append(path: "/api/v1/computers-inventory/\(id)")
 
-        var managementidRequest = URLRequest(url: url)
+        var managementidRequest = URLRequest(url: jamfAuthEndpoint)
         managementidRequest.httpMethod = "GET"
         managementidRequest.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
         managementidRequest.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -243,16 +215,16 @@ struct JamfProAPI {
     
     func getLAPSPassword(jssURL: String, authToken: String, managementId: String, username: String) async -> (String?,Int?) {
         Logger.laps.info("About to fetch the LAPS password for computer with management id of \(managementId) and user name of \(username)")
-        guard var jamfcomputerEndpoint = URLComponents(string: jssURL) else {
-            return (nil, nil)
-        }
         
-        jamfcomputerEndpoint.path="/api/v2/local-admin-password/\(managementId)/account/\(username)/password"
-        guard let url = jamfcomputerEndpoint.url else {
+        guard var jamfAuthEndpoint = URL(string: jssURL ) else {
             return (nil, nil)
         }
-        Logger.laps.info("LAPS Request URL: \(jamfcomputerEndpoint.path, privacy: .public)")
-        var passwordRequest = URLRequest(url: url)
+
+        
+        jamfAuthEndpoint.append(path: "/api/v2/local-admin-password/\(managementId)/account/\(username)/password")
+
+        Logger.laps.info("LAPS Request URL: \(jamfAuthEndpoint.path, privacy: .public)")
+        var passwordRequest = URLRequest(url: jamfAuthEndpoint)
         passwordRequest.httpMethod = "GET"
         passwordRequest.setValue("Bearer \(authToken)", forHTTPHeaderField: "Authorization")
         passwordRequest.setValue("application/json", forHTTPHeaderField: "Accept")

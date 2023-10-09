@@ -3,6 +3,7 @@
 //  Jamf LAPS
 //  Copyright 2023, Jamf
 //
+//
 
 import SwiftUI
 import os.log
