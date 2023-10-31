@@ -18,6 +18,7 @@ This app will allow you to:
   - Update Local Admin Password Settings
   - View Local Admin Password
   - View Local Admin Password Audit History
+  - Read Computers
 
 ### History
 - 1.0.1
