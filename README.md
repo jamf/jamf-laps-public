@@ -14,6 +14,7 @@ This app will allow you to:
 - A Mac running macOS Ventura (13.0)
 - Jamf Pro 10.45 or higher
 - Jamf Pro Account that has the following minimum permissions:
+  - Read Computers
   - Send Local Admin Password Command
   - Update Local Admin Password Settings
   - View Local Admin Password
